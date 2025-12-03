@@ -1,0 +1,18 @@
+[
+    {
+        "name": "WTC",
+        "format": "Test"
+    },
+    {
+        "name": "Ashes",
+        "format": "Test"
+    },
+    {
+        "name": "World cup",
+        "format": "50 over"
+    },
+    {
+        "name": "IPL",
+        "format": "20 over"
+    }
+]
