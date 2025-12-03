@@ -82,30 +82,158 @@
 
         // Callback Hell
 
-function getData(endpoint, cb) {
-    const xhr = new XMLHttpRequest;
+// function getData(endpoint, cb) {
+//     const xhr = new XMLHttpRequest;
 
-    xhr.open('GET', endpoint)
+//     xhr.open('GET', endpoint)
 
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4) {
-            if (this.status === 200) {
-                cb(JSON.parse(this.response));
+//     xhr.onreadystatechange = function() {
+//         if (this.readyState === 4) {
+//             if (this.status === 200) {
+//                 cb(JSON.parse(this.response));
+//             }
+//         }
+//     }
+
+//     setTimeout(() => {
+//         xhr.send();
+//     }, Math.floor(Math.random() * 3000) + 1000)
+// }
+
+// getData('./tournament.json', (data) => {
+//     console.log(data);
+//     getData('./team.json', (data) => {
+//         console.log(data);
+//         getData('./players.json', (data) => {
+//             console.log(data);
+//         })
+//     })
+// })
+
+
+
+
+        // Promises
+
+
+// const promise = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         console.log("Async Task 1 is completed.");
+//         resolve()
+//     }, 1000);
+// })
+
+// promise.then(() => {
+//     console.log("Promise 1 consumed...");
+// })
+
+// const getUser = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         let error = false;
+
+//         if (!error) {
+//             resolve({ name: "Vishal", age: 23})
+//         }else{
+//             reject("Error: Something went wrong.")
+//         }
+//     }, 2000);
+// })
+
+// getUser.then((user) => console.log(user))
+//         .catch((error) => console.log(error))
+//         .finally(() => console.log("Promise is Consumed either Resolve or Reject"))
+
+// console.log("Hello");
+
+
+
+
+
+
+
+// const createPostBtn = document.querySelector(".create-post")
+// const getPostBtn = document.querySelector(".get-post") 
+
+// const posts = [
+//     {title: "Post one", about: "This is post one"},
+//     {title: "Post two", about: "This is post two"}
+// ]
+
+// function createpost(post){
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//         let error = true;
+
+//         if (!error) { 
+//             posts.push(post);
+//             resolve()
+//         }
+//         else{
+//             reject("Something went wrong.")
+//         }
+//         }, 2000);
+//     });
+// }
+
+// function getPost() {
+//     setTimeout(() => {
+//         posts.forEach(post => {
+//             let div = document.createElement("div")
+//             div.innerHTML = `<strong>${post.title}</strong> : ${post.about}`
+//             document.querySelector(".posts").appendChild(div)
+//         })
+//     }, 1000);
+// }
+
+// function showError(error) {
+//     const h3 = document.createElement("h3")
+//     h3.innerHTML = `<strong>${error}</strong>`
+//     document.querySelector(".posts").appendChild(h3)
+// }
+
+// createPostBtn.addEventListener("click", createpost({title: "Post three", about: "This is post three"})
+//     .then(getPost)
+//     .catch(showError)
+// )
+
+
+
+
+
+
+function getData(endpoint) {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest;
+        let error = true;
+        xhr.open('GET', endpoint)
+    
+        xhr.onreadystatechange = function() {
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    if (!error) {
+                        resolve(JSON.parse(this.response));
+                    }
+                    else{
+                        reject('Something went wrong!')
+                    }
+                }
             }
         }
-    }
-
-    setTimeout(() => {
-        xhr.send();
-    }, Math.floor(Math.random() * 3000) + 1000)
+    
+        setTimeout(() => {
+            xhr.send();
+        }, Math.floor(Math.random() * 3000) + 1000)
+    })
 }
 
-getData('./tournament.json', (data) => {
-    console.log(data);
-    getData('./team.json', (data) => {
+getData('./tournament.json')
+    .then((data) => {
         console.log(data);
-        getData('./players.json', (data) => {
-            console.log(data);
-        })
+        return getData('./team.json')
     })
-})
+    .then((data) => {
+        console.log(data);
+        return getData('./players.json')
+    })
+    .then((data) => console.log(data))
+    .catch((error) => console.log(error))
