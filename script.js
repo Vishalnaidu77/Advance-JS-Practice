@@ -115,7 +115,6 @@
 
         // Promises
 
-
 // const promise = new Promise((resolve, reject) => {
 //     setTimeout(() => {
 //         console.log("Async Task 1 is completed.");
@@ -201,39 +200,169 @@
 
 
 
-function getData(endpoint) {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest;
-        let error = true;
-        xhr.open('GET', endpoint)
+// function getData(endpoint) {
+//     return new Promise((resolve, reject) => {
+//         const xhr = new XMLHttpRequest;
+//         let error = false;
+//         xhr.open('GET', endpoint)
     
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (this.status === 200) {
-                    if (!error) {
-                        resolve(JSON.parse(this.response));
-                    }
-                    else{
-                        reject('Something went wrong!')
-                    }
-                }
-            }
-        }
+//         xhr.onreadystatechange = function() {
+//             if (this.readyState === 4) {
+//                 if (this.status === 200) {
+//                     if (!error) {
+//                         resolve(JSON.parse(this.response));
+//                     }
+//                     else{
+//                         reject('Something went wrong!')
+//                     }
+//                 }
+//             }
+//         }
     
-        setTimeout(() => {
-            xhr.send();
-        }, Math.floor(Math.random() * 3000) + 1000)
-    })
+//         setTimeout(() => {
+//             xhr.send();
+//         }, Math.floor(Math.random() * 3000) + 1000)
+//     })
+// }
+
+// getData('./tournament.json')
+//     .then((data) => {
+//         console.log(data);
+//         return getData('./team.json')
+//     })
+//     .then((data) => {
+//         console.log(data);
+//         return getData('./players.json')
+//     })
+//     .then((data) => console.log(data))
+//     .catch((error) => console.log(error))
+
+
+
+
+
+        // OOPS (Object oriented programming concept)
+
+
+// function CreatePencil(name, price, colour, company){
+//     this.name = name;
+//     this.price = price;
+//     this.colour = colour;
+//     this.company = company;
+// }
+
+// CreatePencil.prototype.write = function(text){
+//         let h1 = document.createElement("h1");
+//         h1.textContent = text;
+//         h1.style.color = this.colour;
+//         document.querySelector("main").appendChild(h1)
+//    }
+
+// let pencil1 = new CreatePencil("Doms", 10, "royalblue", "Doms")
+// let pencil2 = new CreatePencil("Apsara", 10, "Grey", "Natraj")
+// let pencil3 = new CreatePencil("Natraj", 5, "Red", "Natraj")
+
+
+// class CreatePencil{
+//     constructor(name, price, colour, company){
+//         this.name = name;
+//         this.price = price;
+//         this.colour = colour;
+//         this.company = company;
+//     }
+
+//     write(text){
+//         let h1 = document.createElement("h1")
+//         h1.textContent = text;
+//         h1.style.color = this.colour;
+//         document.querySelector("main").append(h1)
+//     }
+
+//     erase(){
+//         document.querySelectorAll("h1").forEach(elem => {
+//             if(elem.style.color === this.colour){
+//                 elem.remove();
+//             }
+//         })
+//     }
+// }
+
+// let p1 = new CreatePencil("Doms", 10, "royalblue", "Doms")
+// let p2 = new CreatePencil("Apsara", 10, "grey", "Natraj")
+// let p3 = new CreatePencil("Natraj", 5, "red", "Natraj")
+
+
+
+        // Extends & Super 
+
+// class User {
+//     constructor(name, address, username, email, role){
+//         this.name = name;
+//         this.address = address;
+//         this.username = username;
+//         this.email = email;
+//         this.role = role;
+//     }
+ 
+//     write(text){
+//         let h1 = document.createElement("h1")
+//         h1.textContent = `${this.name} : ${text}`;
+//         document.querySelector("main").append(h1)
+//     }
+// }
+
+// let u1 = new User("Vishal", "Bhilai", "vishal22", )
+
+
+// let num = Math.floor(Math.random() * 10) + 1;
+
+// const prm = new Promise((resolve, reject) => {
+//     if (num > 5) {
+//         resolve()
+//     }
+//     else reject()
+// })
+
+// prm.then(() => {
+//     console.log("Resolved", num)
+// })
+// .catch(() => {
+//     console.log("Rejected", num);
+// })
+
+
+
+// fetch(`https://randomuser.me/api/`)
+// .then(function(data){
+//     return data.json()
+// })
+// .then((data) => {
+//         console.log(data.results[0].name.first)
+// }).catch((err) => {
+//         console.log(err);
+// })
+
+
+
+
+                // Async Await
+
+function randomNumber(){
+        return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                        let num = Math.floor(Math.random() * 10) + 1;
+                        if(num > 5){
+                                resolve(true);
+                        }else{
+                                reject(false)
+                        }
+                }, 1000);
+        })
 }
 
-getData('./tournament.json')
-    .then((data) => {
-        console.log(data);
-        return getData('./team.json')
-    })
-    .then((data) => {
-        console.log(data);
-        return getData('./players.json')
-    })
-    .then((data) => console.log(data))
-    .catch((error) => console.log(error))
+async function abc(){
+        let num = await randomNumber()
+        console.log(num)
+}
+
+abc()
