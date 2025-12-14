@@ -347,22 +347,91 @@
 
                 // Async Await
 
-function randomNumber(){
+// function randomNumber(){
+//         return new Promise((resolve, reject) => {
+//                 setTimeout(() => {
+//                         let num = Math.floor(Math.random() * 10) + 1;
+//                         if(num > 5){
+//                                 resolve(true);
+//                         }else{
+//                                 reject(false)
+//                         }
+//                 }, 1000);
+//         })
+// }
+
+// async function abc(){
+//         let num = await randomNumber()
+//         console.log(num)
+// }
+
+// abc()
+
+
+
+
+                // Question 1
+
+// let apiKey = `2f8fad1bd7b4051c5fbaaea5bc8f4c4e`
+
+// async function getWeather(city){
+//         try {
+//                 let rawData = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
+//                 if (!rawData.ok) {
+//                         throw new Error("City not found or Something went wrong.")
+//                 }
+//                 let data = await rawData.json()
+//                 if (data.main.temp < 0) {
+//                         console.warn(`Too Cold out there... ${data.main.temp}`);
+//                 }
+//                 else if (data.main.temp > 30) {
+//                         console.warn(`Too Hot out there... ${data.main.temp}`);
+//                 }
+//                 else{
+//                         console.log(data.main.temp);
+//                 }
+//         } catch (err) {
+//                 console.log(err.message);     
+//         }
+// }
+
+// getWeather("Birnin Kebbi")
+
+
+
+
+                // Question 2
+
+
+const user = [
+        "a@a.com",
+        "b@b.com",
+        "c@c.com"
+]
+
+const sendEmail = (email) => {
+        let time = Math.floor(Math.random() * 5)
         return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                        let num = Math.floor(Math.random() * 10) + 1;
-                        if(num > 5){
-                                resolve(true);
-                        }else{
-                                reject(false)
-                        }
-                }, 1000);
+                        let probability = Math.floor(Math.random() * 10)
+                        if(probability <= 5) resolve("Email sent successfully.")
+                        else reject("Email not send.")
+                }, time * 1000);
         })
 }
 
-async function abc(){
-        let num = await randomNumber()
-        console.log(num)
+
+const sendEmails = async (userList) => {
+        let emailMails = userList.map((mails) => {
+                return sendEmail(mails)
+                .then((data) => console.log(data))
+                .catch((err) => console.log(err))
+        })
+        
+        let result = await Promise.all(emailMails)
+        result.forEach(res => {
+                console.log(`${res}` );
+        });
 }
 
-abc()
+sendEmails(user)
